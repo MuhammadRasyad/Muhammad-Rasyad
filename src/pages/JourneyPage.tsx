@@ -16,104 +16,48 @@ export default function JourneyPage() {
   };
 
   useEffect(() => {
-    const mm = gsap.matchMedia();
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    // Parallax background
-    if (!prefersReduced) {
-      gsap.to(".bg-parallax--tr", {
-        yPercent: -15, ease: "none",
-        scrollTrigger: { trigger: ".journey-page", start: "top bottom", end: "bottom top", scrub: true }
-      });
-      gsap.to(".bg-parallax--bl", {
-        yPercent: 20, ease: "none",
-        scrollTrigger: { trigger: ".journey-page", start: "top bottom", end: "bottom top", scrub: true }
-      });
-    }
-
-    // Batang tumbuh & progress rail kanan
+    // Batang pohon tumbuh mengikuti scroll
     gsap.set(".tree-trunk__inner", { scaleY: 0, transformOrigin: "top center" });
     gsap.to(".tree-trunk__inner", {
-      scaleY: 1, ease: "none",
-      scrollTrigger: { trigger: ".journey-timeline", start: "top 85%", end: "bottom 15%", scrub: true }
+      scaleY: 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".journey-timeline",
+        start: "top 85%",
+        end: "bottom 15%",
+        scrub: true,
+      },
     });
 
-    gsap.set(".progress-rail__bar", { scaleY: 0, transformOrigin: "top center" });
-    gsap.to(".progress-rail__bar", {
-      scaleY: 1, ease: "none",
-      scrollTrigger: { trigger: ".journey-timeline", start: "top top", end: "bottom bottom", scrub: true }
-    });
-
-    // Batch animate setiap node (cabang, knot, card, media, icon)
+    // Cabang menggeliat masuk + kartu fade-in
     sectionRefs.current.forEach((el, i) => {
-      const isLeft = el.classList.contains("tree-node--left");
       const branch = el.querySelector(".tree-branch") as HTMLElement | null;
-      const knot = el.querySelector(".tree-knot") as HTMLElement | null;
       const card = el.querySelector(".journey-card") as HTMLElement | null;
-      const media = el.querySelector(".journey-card__media") as HTMLElement | null;
-      const icon = el.querySelector(".journey-icon svg") as HTMLElement | null;
 
-      // Cabang grow
       if (branch) {
-        gsap.set(branch, { scaleX: 0, transformOrigin: isLeft ? "right center" : "left center" });
+        gsap.set(branch, { scaleX: 0, transformOrigin: i % 2 === 0 ? "right center" : "left center" });
         gsap.to(branch, {
           scaleX: 1,
-          duration: prefersReduced ? 0 : 0.7,
+          duration: 0.6,
           ease: "power2.out",
-          scrollTrigger: { trigger: el, start: "top 80%" }
+          scrollTrigger: { trigger: el, start: "top 80%" },
         });
       }
-      // Titik (knot) pulse
-      if (knot) {
-        gsap.fromTo(knot,
-          { scale: 0.7, filter: "brightness(0.9)" },
-          {
-            scale: 1, filter: "brightness(1.2)",
-            duration: prefersReduced ? 0 : 0.5, ease: "back.out(2)",
-            scrollTrigger: { trigger: el, start: "top 78%" }
-          }
-        );
-      }
-      // Card slide + tilt
       if (card) {
-        gsap.fromTo(card,
-          { opacity: 0, y: 48, rotate: isLeft ? -2 : 2 },
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 40, rotate: i % 2 === 0 ? -1 : 1 },
           {
-            opacity: 1, y: 0, rotate: 0,
-            duration: prefersReduced ? 0 : 0.7, ease: "power3.out",
-            scrollTrigger: { trigger: el, start: "top 78%" }
-          }
-        );
-      }
-      // Media (Lottie) reveal mask
-      if (media) {
-        gsap.set(media, { clipPath: isLeft ? "inset(0 100% 0 0 round 14px)" : "inset(0 0 0 100% round 14px)" });
-        gsap.to(media, {
-          clipPath: "inset(0 0 0 0 round 14px)",
-          duration: prefersReduced ? 0 : 0.7, ease: "power2.out",
-          delay: 0.05,
-          scrollTrigger: { trigger: el, start: "top 74%" }
-        });
-      }
-      // Icon pop + glow
-      if (icon) {
-        gsap.fromTo(icon,
-          { scale: 0.6, opacity: 0.4, filter: "drop-shadow(0 0 0 rgba(56,189,248,0))" },
-          {
-            scale: 1, opacity: 1,
-            filter: "drop-shadow(0 6px 14px rgba(56,189,248,.35))",
-            duration: prefersReduced ? 0 : 0.45, ease: "back.out(2)",
-            scrollTrigger: { trigger: el, start: "top 82%" }
+            opacity: 1,
+            y: 0,
+            rotate: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: { trigger: el, start: "top 78%" },
           }
         );
       }
     });
-
-    // Cleanup
-    return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
-      mm.revert();
-    };
   }, []);
 
   const timeline = [
@@ -177,34 +121,13 @@ export default function JourneyPage() {
 
   return (
     <div className="journey-page bg-grid text-slate-100">
-      {/* Parallax BG */}
-      <div className="bg-parallax bg-parallax--tr" aria-hidden />
-      <div className="bg-parallax bg-parallax--bl" aria-hidden />
-
       {/* Header */}
       <header className="journey-header">
-        <motion.h1
-          className="journey-title"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          Pohon Perjalanan Saya
-        </motion.h1>
-        <motion.p
-          className="journey-sub"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.05 }}
-        >
+        <h1 className="journey-title">Pohon Perjalanan Saya</h1>
+        <p className="journey-sub">
           Dari rasa ingin tahu, keterbatasan, sampai prestasi. Ini kisah yang menumbuhkan saya sebagai manusia & developer.
-        </motion.p>
+        </p>
       </header>
-
-      {/* Progress rail kanan */}
-      <aside className="progress-rail" aria-hidden>
-        <div className="progress-rail__bar" />
-      </aside>
 
       {/* Timeline as a Tree */}
       <section className="journey-timeline">
@@ -215,7 +138,11 @@ export default function JourneyPage() {
 
         {/* Node / Cabang */}
         {timeline.map((item, i) => (
-          <div key={i} ref={addToRefs} className={`tree-node tree-node--${item.side}`}>
+          <div
+            key={i}
+            ref={addToRefs}
+            className={`tree-node tree-node--${item.side}`}
+          >
             {/* Cabang dari batang ke kartu */}
             <span className={`tree-branch tree-branch--${item.side}`} />
 
@@ -234,7 +161,7 @@ export default function JourneyPage() {
               </div>
               <p className="journey-text">{item.text}</p>
               <div className="journey-card__media">
-                <Player autoplay loop src={item.lottie} style={{ width: "100%", height: "100%" }} />
+                <Player autoplay loop src={item.lottie} />
               </div>
             </motion.article>
           </div>
