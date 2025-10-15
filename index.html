@@ -2,12 +2,38 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>muhammad-rasyad</title>
+    <title>Muhammad Rasyad</title>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- ✅ Tambahkan Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ✅ Konfigurasi tambahan Tailwind (opsional) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#0284c7',
+              secondary: '#0f172a',
+            },
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- ✅ Stylesheet tambahan (jika kamu pakai custom CSS seperti dari chat sebelumnya) -->
+    <link rel="stylesheet" href="/cdn-tailwind-fixes.css" />
   </head>
-  <body>
+
+  <body class="bg-grid text-slate-100 min-h-screen">
     <div id="root"></div>
+
+    <!-- ✅ React entry point -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
