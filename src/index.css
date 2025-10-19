@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+/* CSS kamu lainnya di bawah sini kalau ada */
 
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap');
 .font-typer { font-family: 'Source Code Pro', monospace; }
