@@ -1,19 +1,13 @@
 import { motion } from "framer-motion";
 import { Braces } from "lucide-react";
 
-type TypedBrandProps = {
-  text?: string;
-  typeDuration?: number;
-  className?: string;
-  iconSize?: number;
-};
-
+// Pastikan kamu sudah menambahkan font di Tailwind (lihat bawah)
 export default function TypedBrand({
-  text = "RasyadDev",
+  text = "Rasyad_Dev",
   typeDuration = 4,
   className = "",
   iconSize = 22,
-}: TypedBrandProps) {
+}) {
   const chars = text.split("");
 
   return (
@@ -28,15 +22,12 @@ export default function TypedBrand({
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         aria-hidden
       >
-        <Braces
-          className="text-sky-400 drop-shadow"
-          size={iconSize}
-        />
+        <Braces className="text-sky-400 drop-shadow" size={iconSize} />
       </motion.span>
 
-      {/* ===== Teks RasyadDev (efek ketik halus) ===== */}
+      {/* ===== Teks RasyadDev (gaya typewriter + animasi ketik) ===== */}
       <motion.span
-        className="font-bold text-white text-lg flex"
+        className="font-typer text-sky-500 md:text-white text-lg flex tracking-wide"
         initial="hidden"
         animate="visible"
         variants={{

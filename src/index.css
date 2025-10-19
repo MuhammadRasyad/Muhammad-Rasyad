@@ -1,3 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap');
+.font-typer { font-family: 'Source Code Pro', monospace; }
+@keyframes blink { 50% { opacity: 0; } }
+
 /* =============================================
    App Layout — Fix Scroll, Fixed Header/Bottom
 ============================================= */
@@ -5,6 +13,12 @@
   /* buat aman di iPhone/Android notched */
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap');
+
+.font-typer {
+  font-family: 'Source Code Pro', monospace;
+  letter-spacing: 0.04em;
 }
 
 .app-layout {
@@ -235,26 +249,54 @@
   --shadow-1: 0 6px 18px rgba(2,6,23,.3);
   --shadow-2: 0 10px 30px rgba(56,189,248,.18);
   --ease-soft: cubic-bezier(.22,.61,.36,1);
+  --page-bg: url("/banner-bg.png");
+}
+/* ===== Page Background from SVG (ke-opacity halus, fixed, cover) ===== */
+.bg-with-svg{
+  position: relative;
+  /* biar grid/gradient kamu tetap ada */
+  /* background:
+    radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/18px 18px,
+    linear-gradient(var(--bg-950), var(--bg-900)); */
+}
+
+.bg-with-svg::before{
+  content:"";
+  position: fixed;           /* menempel viewport (parallax ringan) */
+  inset: 0;
+  background: center / cover no-repeat var(--page-bg, none);
+  opacity: .16;              /* atur transparansi SVG */
+  pointer-events: none;
+  z-index: -1;               /* di belakang konten */
+  /* haluskan rendering */
+  image-rendering: -webkit-optimize-contrast;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* kalau butuh lebih gelap/terang di mobile */
+@media (max-width: 767px){
+  .bg-with-svg::before{ opacity: .22; }
 }
 
 /* =============================================
    Background Grid + Vignette
 ============================================= */
-.bg-grid{
+/* .bg-grid{
   position: relative;
   background:
     radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px) 0 0/18px 18px,
     linear-gradient(var(--bg-950), var(--bg-900));
-}
+} */
 
 
 /* =============================================
    Layout wrappers
 ============================================= */
-.app{ }
+/* .app{ }
 .topbar{ }
 .content{ }
-.container{ }
+.container{ } */
 
 /* =============================================
    Typography & Links

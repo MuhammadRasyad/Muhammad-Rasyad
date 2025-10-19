@@ -24,7 +24,6 @@
 .home{
   min-height: 100svh;
   color: var(--text-100);
-  selection-color: white;
 }
 
 /* Background grid + vignette */
