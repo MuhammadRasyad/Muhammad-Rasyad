@@ -3,7 +3,7 @@
 import "../styles/home.css";
 import "../index.css";
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -145,7 +145,7 @@ export default function HomePage() {
           <div className="relative isolate overflow-hidden rounded-2xl border border-sky-700/40 bg-gradient-to-b from-sky-950/60 to-slate-900/30 shadow-[0_6px_18px_rgba(56,189,248,.25)]">
             <div className="aspect-[3/4]">
               <img
-                src="/images/profile-standing.jpg" // ← ganti ke foto kamu (berdiri, portrait)
+                src="/foto.jpg" // ← ganti ke foto kamu (berdiri, portrait)
                 alt="Foto Muhammad Rasyad berdiri"
                 className="h-full w-full object-cover object-center"
                 onError={(e) => {
@@ -163,7 +163,7 @@ export default function HomePage() {
         </div>
       </div>
     </section>
-    
+
       {/* ================= HERO (Full Tailwind + AOS) ================= */}
       <section className="relative overflow-hidden py-20 md:py-24">
         <div className="mx-auto w-[min(1120px,92%)] grid lg:grid-cols-2 items-center gap-10">

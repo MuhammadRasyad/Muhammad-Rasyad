@@ -214,7 +214,7 @@ export default function About() {
               { name: "PHP", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
               { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
               { name: "TensorFlow", logo: "https://logo.svgcdn.com/devicon/tensorflow-original.png" },
-            ].map((tech, i) => (
+            ].map((tech) => (
               <div
                 key={tech.name}
                 className="group relative flex flex-col items-center justify-center gap-2 transition duration-300 hover:scale-110"
